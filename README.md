@@ -4,6 +4,10 @@
 
 A desktop widget for Windows that displays the current time for multiple cities across different timezones simultaneously, right above the taskbar.
 
+## Screenshots
+
+<img src="public/screen1.png" alt="Widget on desktop" />&nbsp;&nbsp;<img src="public/screen3.png" alt="Settings window" width="260" />
+
 ## Features
 
 - Multiple time zones displayed simultaneously
