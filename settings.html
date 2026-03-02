@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Настройки</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      padding: 20px;
+      user-select: none;
+    }
+
+    h2 {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    /* --- Список добавленных городов --- */
+    .city-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 20px;
+      min-height: 40px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    .city-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #252525;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .city-row-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .city-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64a0ff;
+      background: rgba(100,160,255,0.1);
+      border-radius: 4px;
+      padding: 2px 7px;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .city-name {
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .city-tz {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 1px;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .btn-remove:hover { color: #ff5555; background: rgba(255,85,85,0.1); }
+
+    .empty {
+      color: rgba(255,255,255,0.2);
+      font-size: 13px;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    /* --- Поиск --- */
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #252525;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #e0e0e0;
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: rgba(100,160,255,0.4);
+    }
+
+    .search-input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .suggestions {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #2a2a2a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 10;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .suggestion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .suggestion:hover,
+    .suggestion.active {
+      background: rgba(100,160,255,0.12);
+    }
+
+    .suggestion-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .suggestion-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64a0ff;
+      min-width: 36px;
+    }
+
+    .suggestion-name { font-size: 13px; color: #fff; }
+    .suggestion-en   { font-size: 11px; color: rgba(255,255,255,0.35); }
+    .suggestion-time { font-size: 13px; color: rgba(255,255,255,0.5); font-variant-numeric: tabular-nums; }
+
+    .hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .lang-btn {
+      flex: 1;
+      background: #252525;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .lang-btn:hover { border-color: rgba(100,160,255,0.3); color: #fff; }
+    .lang-btn.active { background: rgba(100,160,255,0.15); border-color: rgba(100,160,255,0.5); color: #64a0ff; }
+  </style>
+</head>
+<body>
+  <h2 id="hCities">Cities</h2>
+  <div class="city-list" id="cityList"></div>
+
+  <h2 id="hAdd">Add City</h2>
+  <div class="search-wrapper">
+    <input class="search-input" id="searchInput" type="text"
+           placeholder="Type city name..." autocomplete="off" />
+    <div class="suggestions" id="suggestions" style="display:none"></div>
+  </div>
+  <p class="hint" id="hint">↑↓ to navigate, Enter — add, Esc — close</p>
+
+  <h2 id="hLang">Language</h2>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="en">EN — English</button>
+    <button class="lang-btn" data-lang="ru">RU — Русский</button>
+  </div>
+
+  <script src="settings-renderer.js"></script>
+</body>
+</html>
