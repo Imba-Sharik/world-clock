@@ -6,7 +6,9 @@
 
 ## Скриншоты
 
-<img src="public/screen1.png" alt="Виджет на рабочем столе" />&nbsp;&nbsp;<img src="public/screen2.png" alt="Виджет на рабочем столе 2" />&nbsp;&nbsp;<img src="public/screen3.png" alt="Окно настроек" width="260" />
+<img src="public/screen1.png" alt="Виджет на рабочем столе" /><br><br>
+<img src="public/screen2.png" alt="Виджет на рабочем столе 2" /><br><br>
+<img src="public/screen3.png" alt="Окно настроек" width="260" />
 
 ## Возможности
 

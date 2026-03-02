@@ -6,7 +6,9 @@ A desktop widget for Windows that displays the current time for multiple cities 
 
 ## Screenshots
 
-<img src="public/screen1.png" alt="Widget on desktop" />&nbsp;&nbsp;<img src="public/screen2.png" alt="Widget on desktop 2" />&nbsp;&nbsp;<img src="public/screen3.png" alt="Settings window" width="260" />
+<img src="public/screen1.png" alt="Widget on desktop" /><br><br>
+<img src="public/screen2.png" alt="Widget on desktop 2" /><br><br>
+<img src="public/screen3.png" alt="Settings window" width="260" />
 
 ## Features
 
